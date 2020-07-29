@@ -11,22 +11,16 @@ namespace TuinAppApi.Models
         #region Properties
         public int Id { get; set; }
         public string Naam { get; set; }
-        public string Familie { get; set; }
+        public int DagenTotOogst { get; set; }
         public DateTime DatumGeplant { get; set; }
-        public string WikiLink { get; set; }
-        public string FotoUrl { get; set; }
         #endregion
 
-        public Plant(string naam, string familie, DateTime datumGeplant, string wikiLink, string fotoUrl)
+        public Plant(string naam, int dagenTotOogst, DateTime datumGeplant)
         {
             this.Naam = naam;
-            this.Familie = familie;
+            this.DagenTotOogst = dagenTotOogst;
             this.DatumGeplant = datumGeplant;
-            this.WikiLink = wikiLink;
-            this.FotoUrl = fotoUrl;
         }
-
-
 
     }
 }

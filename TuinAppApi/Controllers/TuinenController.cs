@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TuinAppApi.Models;
 
 namespace TuinAppApi.Controllers
 {
@@ -11,5 +12,17 @@ namespace TuinAppApi.Controllers
     [ApiController]
     public class TuinenController : ControllerBase
     {
+        private readonly ITuinenRepository _tuinRepository;
+
+        public TuinenController(ITuinenRepository context)
+        {
+            this._tuinRepository = context;
+        }
+         //GET: api/Tuinen
+        [HttpGet]
+        public IEnumerable<Tuin> GetTuinen()
+        {
+            return _tuinRepository.GetAll().OrderBy(t => t.Naam);
+        }
     }
 }

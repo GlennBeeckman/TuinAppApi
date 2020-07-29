@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TuinAppApi.Data;
+using TuinAppApi.Data.Repositories;
+using TuinAppApi.Models;
 
 namespace TuinAppApi
 {
@@ -26,11 +30,17 @@ namespace TuinAppApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<TuinDbContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("TuinenContext")));
+
+            services.AddScoped<TuinDbInitializer>();
+            services.AddScoped<ITuinenRepository, TuinRepository>();
             services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TuinDbInitializer tuinDbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -39,6 +49,7 @@ namespace TuinAppApi
 
             app.UseHttpsRedirection();
 
+            //register swagger and middleware
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
@@ -50,6 +61,8 @@ namespace TuinAppApi
             {
                 endpoints.MapControllers();
             });
+
+            tuinDbInitializer.InitializeData(); //.wait();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
@@ -10,22 +11,28 @@ namespace TuinAppApi.Models
     {
         #region Properties
         public int Id { get; set; }
+
+        [Required]
         public string Naam { get; set; }
+
         public DateTime dateAdded { get; set; }
-        public ICollection<Plant> Planten { get; set; }
+        public ICollection<Plant> Planten { get; private set; }
         #endregion
 
+        #region Constructors
         public Tuin()
         {
             Planten = new List<Plant>();
             dateAdded = DateTime.Now;
         }
 
-        public Tuin(string naam): this()
+        public Tuin(string naam) : this()
         {
             Naam = naam;
         }
+        #endregion
 
+        #region Methods
         public void AddPlant(Plant plant)
         {
             Planten.Add(plant);
@@ -33,7 +40,8 @@ namespace TuinAppApi.Models
 
         public Plant GetPlant(int id)
         {
-           return Planten.SingleOrDefault(i => i.Id == id);
-        }
+            return Planten.SingleOrDefault(i => i.Id == id);
+        } 
+        #endregion
     }
 }
