@@ -36,7 +36,16 @@ namespace TuinAppApi
 
             services.AddScoped<TuinDbInitializer>();
             services.AddScoped<ITuinenRepository, TuinRepository>();
-            services.AddSwaggerDocument();
+
+            services.AddOpenApiDocument(c => 
+            { 
+                c.DocumentName = "apidocs"; 
+                c.Title = "TuinAPI"; 
+                c.Version = "v1"; 
+                c.Description = "Info over API van de TuinApp"; 
+            });
+
+            //services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

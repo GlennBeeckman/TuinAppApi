@@ -19,13 +19,24 @@ namespace TuinAppApi.Controllers
         {
             this._tuinRepository = context;
         }
-         //GET: api/Tuinen
+
+
+        //GET: api/Tuinen
+        /// <summary>
+        /// Geeft alle tuinen op alfabetische volgorde
+        /// </summary>
+        /// <returns>een array (list) van alle tuinen </returns>
         [HttpGet]
         public IEnumerable<Tuin> GetTuinen()
         {
             return _tuinRepository.GetAll().OrderBy(t => t.Naam);
         }
 
+        /// <summary>
+        /// Geeft tuin met een bepaald id terug
+        /// </summary>
+        /// <param name="id">id van de tuin</param>
+        /// <returns>tuin met opgegeven id of notFoundError</returns>
         [HttpGet("{id}")]
         public ActionResult<Tuin> GetTuin(int id)
         {
@@ -37,6 +48,11 @@ namespace TuinAppApi.Controllers
             return tuin;
         }
 
+        /// <summary>
+        /// voegt nieuwe tuin toe aan lijst
+        /// </summary>
+        /// <param name="tuin">nieuwe tuin</param>
+        /// <returns>de nieuwe tuin</returns>
         [HttpPost]
         public ActionResult<Tuin> PostTuin(Tuin tuin)
         {
@@ -46,15 +62,21 @@ namespace TuinAppApi.Controllers
             return CreatedAtAction(nameof(GetTuin), new { id = tuin.Id }, tuin);
         }
 
+        /// <summary>
+        /// Past opgegeven tuin aan
+        /// </summary>
+        /// <param name="id">id van de tuin die aangepast dient te worden</param>
+        /// <param name="tuin">de aangepaste tuin</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public IActionResult PutTuin(int id, Tuin tuin)
         {
-            if(id != tuin.Id)
+            if (id != tuin.Id)
             {
                 return BadRequest();
             }
 
-            if(!ModelState.IsValid) //throws 404?
+            if (!ModelState.IsValid) //throws 404?
             {
                 return BadRequest();
             }
@@ -64,11 +86,15 @@ namespace TuinAppApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// verwijdert een tuin
+        /// </summary>
+        /// <param name="id">id van de tuin die verwijdert dient te worden</param>
         [HttpDelete("{id}")]
         public IActionResult DeleteTuin(int id)
         {
             Tuin tuin = _tuinRepository.GetBy(id);
-            if(tuin == null)
+            if (tuin == null)
             {
                 return NotFound();
             }
@@ -77,6 +103,48 @@ namespace TuinAppApi.Controllers
             _tuinRepository.SaveChanges();
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// geeft een plant van een tuin
+        /// </summary>
+        /// <param name="id">id van de tuin</param>
+        /// <param name="plantId">id van de plant</param>
+        [HttpGet("{id}/planten/{plantId}")]
+        public ActionResult<Plant> GetPlant(int id, int plantId)
+        {
+            if(!_tuinRepository.TryGetTuin(id, out var tuin))
+            {
+                return NotFound();
+            }
+
+            Plant plant = tuin.GetPlant(plantId);
+            if(plant == null)
+            {
+                return NotFound();
+            }
+
+            return plant;
+        }
+
+        /// <summary>
+        /// voegt een plant toe aan een tuin
+        /// </summary>
+        /// <param name="id">id van de tuin</param>
+        /// <param name="plant">de plant die toegevoegd wordt</param>
+        /// <returns></returns>
+        [HttpPost("{id}/planten")]
+        public ActionResult<Plant> PostPlant(int id, Plant plant)
+        {
+            if(!_tuinRepository.TryGetTuin(id, out var tuin))
+            {
+                return NotFound();
+            }
+
+            var PlantToCreate = new Plant(plant.Naam, plant.DagenTotOogst, plant.DatumGeplant);
+            tuin.AddPlant(PlantToCreate);
+            _tuinRepository.SaveChanges();
+            return CreatedAtAction("GetPlant", new { id = tuin.Id, plantId = PlantToCreate.Id }, PlantToCreate);
         }
     }
 }
