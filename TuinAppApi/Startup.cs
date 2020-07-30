@@ -44,8 +44,9 @@ namespace TuinAppApi
                 c.Version = "v1"; 
                 c.Description = "Info over API van de TuinApp"; 
             });
-
             //services.AddSwaggerDocument();
+
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +62,8 @@ namespace TuinAppApi
             //register swagger and middleware
             app.UseOpenApi();
             app.UseSwaggerUi3();
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseRouting();
 
