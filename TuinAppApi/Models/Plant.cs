@@ -15,7 +15,7 @@ namespace TuinAppApi.Models
         public DateTime DatumGeplant { get; set; }
         #endregion
 
-        public Plant(string naam, int dagenTotOogst, DateTime datumGeplant)
+        public Plant(string naam, DateTime datumGeplant, int dagenTotOogst)
         {
             this.Naam = naam;
             this.DagenTotOogst = dagenTotOogst;
