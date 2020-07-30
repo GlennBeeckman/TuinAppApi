@@ -35,5 +35,14 @@ namespace TuinAppApi.Controllers
             }
             return tuin;
         }
+
+        [HttpPost]
+        public ActionResult<Tuin> PostTuin(Tuin tuin)
+        {
+            _tuinRepository.Add(tuin);
+            _tuinRepository.SaveChanges();
+
+            return CreatedAtAction(nameof(GetTuin), new { id = tuin.Id }, tuin);
+        }
     }
 }
