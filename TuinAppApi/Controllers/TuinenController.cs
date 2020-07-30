@@ -51,7 +51,7 @@ namespace TuinAppApi.Controllers
         {
             if(id != tuin.Id)
             {
-                throw new BadHttpRequestException(404, "File not found");
+                return BadRequest();
             }
 
             _tuinRepository.Update(tuin);
