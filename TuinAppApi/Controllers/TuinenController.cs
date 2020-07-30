@@ -24,5 +24,16 @@ namespace TuinAppApi.Controllers
         {
             return _tuinRepository.GetAll().OrderBy(t => t.Naam);
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<Tuin> GetTuin(int id)
+        {
+            Tuin tuin = _tuinRepository.GetBy(id);
+            if (tuin == null)
+            {
+                return NotFound();
+            }
+            return tuin;
+        }
     }
 }
