@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS;
+using TuinAppApi.DTO;
 using TuinAppApi.Models;
 
 namespace TuinAppApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class TuinenController : ControllerBase
@@ -54,12 +56,24 @@ namespace TuinAppApi.Controllers
         /// <param name="tuin">nieuwe tuin</param>
         /// <returns>de nieuwe tuin</returns>
         [HttpPost]
-        public ActionResult<Tuin> PostTuin(Tuin tuin)
+        public ActionResult<Tuin> PostTuin(TuinDTO tuin)
         {
-            _tuinRepository.Add(tuin);
+            Tuin tuinOmToeTeVoegen = new Tuin()
+            {
+                Naam = tuin.Naam,
+                dateAdded = tuin.DateAdded
+            };
+
+            foreach(var i in tuin.Planten)
+            {
+                Plant plant = new Plant(i.Naam, i.DagenTotOogst, i.DatumGeplant);
+                tuinOmToeTeVoegen.AddPlant(plant);
+            }
+
+            _tuinRepository.Add(tuinOmToeTeVoegen);
             _tuinRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetTuin), new { id = tuin.Id }, tuin);
+            return CreatedAtAction(nameof(GetTuin), new { id = tuinOmToeTeVoegen.Id }, tuinOmToeTeVoegen);
         }
 
         /// <summary>
@@ -134,7 +148,7 @@ namespace TuinAppApi.Controllers
         /// <param name="plant">de plant die toegevoegd wordt</param>
         /// <returns></returns>
         [HttpPost("{id}/planten")]
-        public ActionResult<Plant> PostPlant(int id, Plant plant)
+        public ActionResult<Plant> PostPlant(int id, PlantDTO plant)
         {
             if(!_tuinRepository.TryGetTuin(id, out var tuin))
             {
