@@ -58,13 +58,14 @@ namespace TuinAppApi.Controllers
         [HttpPost]
         public ActionResult<Tuin> PostTuin(TuinDTO tuin)
         {
+
             Tuin tuinOmToeTeVoegen = new Tuin()
             {
                 Naam = tuin.Naam,
-                dateAdded = tuin.DateAdded
+                dateAdded = DateTime.Now               
             };
 
-            foreach(var i in tuin.Planten)
+            foreach (var i in tuin.Planten)
             {
                 Plant plant = new Plant(i.Naam, i.DagenTotOogst, i.DatumGeplant);
                 tuinOmToeTeVoegen.AddPlant(plant);

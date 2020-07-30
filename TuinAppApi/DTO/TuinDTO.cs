@@ -10,7 +10,6 @@ namespace TuinAppApi.DTO
     {
         [Required]
         public string Naam { get; set; }
-        public DateTime DateAdded { get; set; }
         public IList<PlantDTO> Planten { get; set; }
     }
 }
