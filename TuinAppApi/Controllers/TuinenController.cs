@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS;
 using TuinAppApi.Models;
 
 namespace TuinAppApi.Controllers
@@ -43,6 +44,19 @@ namespace TuinAppApi.Controllers
             _tuinRepository.SaveChanges();
 
             return CreatedAtAction(nameof(GetTuin), new { id = tuin.Id }, tuin);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult PutTuin(int id, Tuin tuin)
+        {
+            if(id != tuin.Id)
+            {
+                throw new BadHttpRequestException(404, "File not found");
+            }
+
+            _tuinRepository.Update(tuin);
+            _tuinRepository.SaveChanges();
+            return NoContent();
         }
     }
 }
