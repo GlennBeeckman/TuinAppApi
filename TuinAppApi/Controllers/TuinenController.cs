@@ -54,8 +54,28 @@ namespace TuinAppApi.Controllers
                 return BadRequest();
             }
 
+            if(!ModelState.IsValid) //throws 404?
+            {
+                return BadRequest();
+            }
+
             _tuinRepository.Update(tuin);
             _tuinRepository.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTuin(int id)
+        {
+            Tuin tuin = _tuinRepository.GetBy(id);
+            if(tuin == null)
+            {
+                return NotFound();
+            }
+
+            _tuinRepository.Delete(tuin);
+            _tuinRepository.SaveChanges();
+
             return NoContent();
         }
     }
