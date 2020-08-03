@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TuinAppApi.Models;
 
 namespace TuinAppApi.Data
 {
-    public class TuinDbInitializer
+    public class OmgevingDbInitializer
     {
-        private readonly TuinDbContext _dbContext;
+        private readonly OmgevingDbContext _dbContext;
 
-        public TuinDbInitializer(TuinDbContext dbContext)
+        public OmgevingDbInitializer(OmgevingDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
 
         public void InitializeData()
         {
-            Console.WriteLine("tuinen being deleted");
+            Console.Write("Omgeving being deleted");
             _dbContext.Database.EnsureDeleted();
-            Console.WriteLine("tuinen deleted, creating new tuinen");
+            Console.Write("omgeving deletes, being created");
             if(_dbContext.Database.EnsureCreated())
             {
-                //seeding via tuinDbContext
+                //seeden geburt in omgevingDbContext
             }
         }
     }

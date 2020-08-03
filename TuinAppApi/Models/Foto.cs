@@ -10,12 +10,12 @@ namespace TuinAppApi.Models
     {
         public int Id { get; set; }
         public DateTime Datum { get; set; }
-        public float Waarde { get; set; }
+        public string Url { get; set; }
 
-        public Foto(DateTime datum, float waarde)
+        public Foto(DateTime datum, string url)
         {
             this.Datum = datum;
-            this.Waarde = waarde;
+            this.Url = url;
         }
     }
 }

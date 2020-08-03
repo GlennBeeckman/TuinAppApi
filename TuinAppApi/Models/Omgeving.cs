@@ -11,6 +11,7 @@ namespace TuinAppApi.Models
         public ICollection<Foto> Fotos { get; set; }
         public ICollection<Temperatuur> Temperaturen { get; set; }
         public ICollection<Luchtdruk> Luchtdrukken { get; set; }
+        public int Id { get; internal set; }
 
         public Omgeving()
         {

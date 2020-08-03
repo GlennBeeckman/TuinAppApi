@@ -34,8 +34,14 @@ namespace TuinAppApi
             services.AddDbContext<TuinDbContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("TuinenContext")));
 
-            services.AddScoped<TuinDbInitializer>();
+            services.AddDbContext<OmgevingDbContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("OmgevingContext")));
+
             services.AddScoped<ITuinenRepository, TuinRepository>();
+            services.AddScoped<IOmgevingRepository, OmgevingRepository>();
+            services.AddScoped<TuinDbInitializer>();
+            services.AddScoped<OmgevingDbInitializer>();
+            
 
             services.AddOpenApiDocument(c => 
             { 
@@ -50,7 +56,7 @@ namespace TuinAppApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TuinDbInitializer tuinDbInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TuinDbInitializer tuinDbInitializer, OmgevingDbInitializer omgevingDbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -75,6 +81,7 @@ namespace TuinAppApi
             });
 
             tuinDbInitializer.InitializeData(); //.wait();
+            omgevingDbInitializer.InitializeData(); //.wait();
         }
     }
 }
