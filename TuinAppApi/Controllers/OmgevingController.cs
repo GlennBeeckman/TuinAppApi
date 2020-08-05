@@ -45,5 +45,12 @@ namespace TuinAppApi.Controllers
             }
             return omgeving;
         }
+
+        // momenteel get nodig van omgevingen omdat ik werk met 1 omgeving (naar toekomst toe kan dit wel toegevoegd worden)
+        // DTO's zijn aanwezig voor moest dit kunnen later
+        // ook geen post aangezien deze waarden niet toegevoegd zullen worden via de app maar rechtstreeks via een rasberry pie
+        // had van in het begin beter rechtstreeks naar deze databank gepushed met mijn data via de rasberry maar dit wist ik niet op voorhand
+        // aangezien ik begonnen was met de rasberry aan de praat te krijgen
+
     }
 }
