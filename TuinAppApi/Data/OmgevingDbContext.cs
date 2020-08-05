@@ -42,7 +42,7 @@ namespace TuinAppApi.Data
 
             //seeden van de fotos
             builder.Entity<Foto>().HasData(
-                    new { Id = 1, Datum = DateTime.Parse("2020-03-09 16:50:09"), Url = "https://dl.dropboxusercontent.com/apitl/1/AVtXUo4BaOzCv4RR8NM26MXdF9QrZJP92yCHSWElvqHtzZa9Ghyu6pKTgQ34Byy0Qd8n5eRXAiUBZygprox08tf3z89XA7EvdA_s0Ajx9BPtESM8aoVprPA8ZW7bpAvzS5Nj797ZJ1B3X_2y0jw2OlzHG-4h0TPrfdg7Z0l5Mqqp4GuWaZ8KVE75Zq2evbx66DAyZAxKKNiNhzCLRwaUUdM4KXp0LUzccOIpAnCaZnWepHMKvceQehTzzSl7rxS8oN3m1LgseYRMbfCqjumvJLaXIRJgvM028ZiuIqNBTwwVU2bcbfAnX5kSio7_NFTk6zqARvGL3ZPAgjeuv7QOoXf0qJJI9ZWnvig8sIuoxXw06S5gpX3E96OEHsq01iNXt4g", OmgevingId = 1 }
+                    new { Id = 1, Datum = DateTime.Parse("2020-03-09 16:50:09"), Url = "https://previews.dropbox.com/p/thumb/AA5hFiq-DXHGWzzPjj9G7YjidvrJDDQa-sAwfoiiFQFifqWk0QEgGs71I4fxy0pzJDDjya38inxVyEYEY6Gglbeawr6Ef7duvRljWwQLk-cCv7ry4J5cxWr9Mvs_830psSMAtYFFGQtOwC32RdKSjQp7bQt8_v9lURPXMBRQ8TiC5p83KVFk6AOfbALrGcJ-U4PGCBGsSsRYCBouwHikMqUOEMv0PTFj-ifFukbp--JrJbAH0IxWBx43ky8GwcatoozyVYEvAcbIfFZJJLotmeNHnj2IzVPX7UdsEqembK3G3ELIvXZEfnkJr77c6eCaOgdAPyBSC1BvovVHvDT3iuzvgmnptn4XuKkEewyuxIB81A/p.jpeg?fv_content=true&size_mode=5", OmgevingId = 1 }
                 );
 
             //seeden van de Temperaturen
