@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using TuinAppApi.Models;
 
@@ -13,6 +14,7 @@ namespace TuinAppApi.Controllers
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
+    [AllowAnonymous]
     public class OmgevingController: ControllerBase
     {
         private readonly IOmgevingRepository _omgevingRepository;
@@ -30,7 +32,7 @@ namespace TuinAppApi.Controllers
         [HttpGet]
         public IEnumerable<Omgeving> GetOmgevingen()
         {
-            return _omgevingRepository.GetAll().OrderBy(o => o.Id);
+            return _omgevingRepository.GetAll().OrderBy(o => o.Id).ToList();           
         }
 
         /// <summary>

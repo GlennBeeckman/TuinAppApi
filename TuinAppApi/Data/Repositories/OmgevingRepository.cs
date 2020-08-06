@@ -35,7 +35,14 @@ namespace TuinAppApi.Data.Repositories
 
         public IEnumerable<Omgeving> GetAll()
         {
-            return _omgevingen.Include(o => o.Fotos).Include(o => o.Temperaturen).Include(o => o.Luchtdrukken).ToList();
+            IList<Omgeving> omgevingen = _omgevingen.Include(o => o.Fotos).Include(o => o.Temperaturen).Include(o => o.Luchtdrukken).ToList();
+            foreach (Omgeving omg in omgevingen)
+            {
+                omg.Fotos = omg.Fotos.OrderByDescending(f => f.Datum).ToList();
+                omg.Temperaturen = omg.Temperaturen.OrderByDescending(t => t.Datum).ToList();
+                omg.Luchtdrukken = omg.Luchtdrukken.OrderByDescending(l => l.Datum).ToList();
+            }
+            return omgevingen;
         }
 
         public IEnumerable<Temperatuur> GetTemperaturen()
