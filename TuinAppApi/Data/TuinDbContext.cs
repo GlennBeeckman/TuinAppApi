@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using TuinAppApi.Models;
 
 namespace TuinAppApi.Data
 {
-    public class TuinDbContext: DbContext
+    public class TuinDbContext: IdentityDbContext
     {
 
         public DbSet<Tuin> Tuinen { get; set; }

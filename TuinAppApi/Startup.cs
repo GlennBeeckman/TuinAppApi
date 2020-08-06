@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using TuinAppApi.Data;
 using TuinAppApi.Data.Repositories;
 using TuinAppApi.Models;
@@ -72,13 +75,23 @@ namespace TuinAppApi
 
 
             //Register the Swagger services
-            services.AddOpenApiDocument(c => 
-            { 
-                c.DocumentName = "apidocs"; 
-                c.Title = "TuinAPI"; 
-                c.Version = "v1"; 
-                c.Description = "Info over API van de TuinApp"; 
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "TuinAPI";
+                c.Version = "v1";
+                c.Description = "Info over API van de TuinApp";
+                c.AddSecurity("JWT", new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey, //use api key for authorization. an api key is a token that a client provides when making api calls
+                    In = OpenApiSecurityApiKeyLocation.Header, //token is passed in the header
+                    Name = "Authorization", // name of the header to be used
+                    Description = "Type into the textbox: Bearer {JWT token}." // description above textfield to enter bearer token
+                });
+                c.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+
             //services.AddSwaggerDocument();
 
             services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
@@ -88,7 +101,17 @@ namespace TuinAppApi
                     x.SaveToken = true; x.TokenValidationParameters = new TokenValidationParameters { 
                         ValidateIssuerSigningKey = true, IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                        , ValidateIssuer = false, ValidateAudience = false, RequireExpirationTime = true }; });
+                        , ValidateIssuer = false, ValidateAudience = false, RequireExpirationTime = true 
+                    }; 
+                });
+
+            services.AddAuthorization(options => { 
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin")); 
+            });
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
