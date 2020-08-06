@@ -11,6 +11,7 @@ namespace TuinAppApi.Data
     {
 
         public DbSet<Tuin> Tuinen { get; set; }
+        public DbSet<Gebruiker> Gebruikers { get; set; }
 
         public TuinDbContext(DbContextOptions<TuinDbContext> options): base(options)
         {
@@ -20,6 +21,7 @@ namespace TuinAppApi.Data
         {
             base.OnModelCreating(builder);
 
+            // entity tuin
             builder.Entity<Tuin>()
                 .HasMany(p => p.Planten)
                 .WithOne()
@@ -31,6 +33,37 @@ namespace TuinAppApi.Data
 
             builder.Entity<Tuin>().Property(t => t.dateAdded)
                 .IsRequired();
+
+            //entity gebruiker
+            builder.Entity<Gebruiker>().Property(g => g.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Entity<Gebruiker>().Property(g => g.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Entity<Gebruiker>().Property(g => g.Email)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Entity<Gebruiker>().Ignore(g => g.FavoriteTuinen);
+
+            //entity gebruikerfavorite
+            builder.Entity<GebruikerFavorite>()
+                .HasKey(gf => new { gf.GebruikerId, gf.TuinId });
+
+            builder.Entity<GebruikerFavorite>()
+                .HasOne(gf => gf.Gebruiker)
+                .WithMany(u => u.Favorites)
+                .HasForeignKey(f => f.GebruikerId);
+
+            builder.Entity<GebruikerFavorite>()
+                .HasOne(gf => gf.Tuin)
+                .WithMany()
+                .HasForeignKey(f => f.TuinId);
+
+
 
             //seeden van tuinen
             builder.Entity<Tuin>().HasData(

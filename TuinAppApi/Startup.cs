@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,10 +40,35 @@ namespace TuinAppApi
 
             services.AddScoped<ITuinenRepository, TuinRepository>();
             services.AddScoped<IOmgevingRepository, OmgevingRepository>();
+            services.AddScoped<IGebruikerRepository, GebruikerRepository>();
             services.AddScoped<TuinDbInitializer>();
             services.AddScoped<OmgevingDbInitializer>();
-            
 
+            services.AddIdentity<IdentityUser, IdentityRole>(a => a.User.RequireUniqueEmail = true).AddEntityFrameworkStores<TuinDbContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+            });
+
+
+            //Register the Swagger services
             services.AddOpenApiDocument(c => 
             { 
                 c.DocumentName = "apidocs"; 
@@ -80,7 +106,7 @@ namespace TuinAppApi
                 endpoints.MapControllers();
             });
 
-            tuinDbInitializer.InitializeData(); //.wait();
+            tuinDbInitializer.InitializeData().Wait();
             omgevingDbInitializer.InitializeData(); //.wait();
         }
     }
