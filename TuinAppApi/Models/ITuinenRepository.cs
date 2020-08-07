@@ -10,6 +10,7 @@ namespace TuinAppApi.Models
         Tuin GetBy(int id);
         bool TryGetTuin(int id, out Tuin tuin);
         IEnumerable<Tuin> GetAll();
+        IEnumerable<Tuin> GetBy(string naam = null);
         void Add(Tuin tuin);
         void Delete(Tuin tuin);
         void Update(Tuin tuin);

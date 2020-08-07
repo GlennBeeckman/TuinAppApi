@@ -34,9 +34,13 @@ namespace TuinAppApi.Controllers
         /// </summary>
         /// <returns>een array (list) van alle tuinen </returns>
         [HttpGet]
-        public IEnumerable<Tuin> GetTuinen()
+        public IEnumerable<Tuin> GetTuinen(string naam)
         {
-            return _tuinRepository.GetAll().OrderBy(t => t.Naam);
+            if(string.IsNullOrEmpty(naam))
+            {
+                return _tuinRepository.GetAll().OrderBy(t => t.Naam);
+            }
+            return _tuinRepository.GetBy(naam);
         }
 
         /// <summary>

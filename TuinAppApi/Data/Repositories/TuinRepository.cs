@@ -54,5 +54,15 @@ namespace TuinAppApi.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+        public IEnumerable<Tuin> GetBy(string naam = null)
+        {
+            var tuinen = _tuinen.Include(t => t.Planten).AsQueryable();
+            if(!string.IsNullOrEmpty(naam))
+            {
+                tuinen = tuinen.Where(t => t.Naam.IndexOf(naam) >= 0);
+            }
+            return tuinen.OrderBy(t => t.Naam).ToList();
+        }
     }
 }

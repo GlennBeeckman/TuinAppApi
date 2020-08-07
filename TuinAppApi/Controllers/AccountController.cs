@@ -56,7 +56,6 @@ namespace TuinAppApi.Controllers
             return BadRequest();
         }
 
-
         /// <summary>
         /// Register a user
         /// </summary>
@@ -80,9 +79,6 @@ namespace TuinAppApi.Controllers
             return BadRequest();
         }
 
-
-
-
         /// <summary>
         /// Checks if an email is available as username
         /// </summary>
@@ -96,6 +92,10 @@ namespace TuinAppApi.Controllers
             return user == null;
         }
 
+        /// <summary>
+        /// returns favorite gardens from user
+        /// </summary>
+        /// <returns>favorite garden from users</returns>
         [HttpGet("Favourites")] 
         public IEnumerable<Tuin> GetFavourites() { 
             Gebruiker gebruiker = _gebruikerRepository.GetBy(User.Identity.Name); 
