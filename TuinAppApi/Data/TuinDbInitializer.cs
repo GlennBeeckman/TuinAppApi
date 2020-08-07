@@ -22,13 +22,19 @@ namespace TuinAppApi.Data
         {
             Console.WriteLine("tuinen being deleted");
             _dbContext.Database.EnsureDeleted();
-            Console.WriteLine("tuinen deleted, creating new tuinen");
+            Console.WriteLine("creating new tuinen");
             if(_dbContext.Database.EnsureCreated())
             {
+                Console.WriteLine("Tuinen created");
+                Console.WriteLine("Adding users");
                 Gebruiker gebruiker = new Gebruiker { Email = "tuinmaster@hogent.be", FirstName = "Glenn", LastName = "Beeckman" };
                 _dbContext.Add(gebruiker);
 
                 await CreateGebruiker(gebruiker.Email, "P@ssword1234");
+                Console.WriteLine("User Created");
+                Console.WriteLine();
+                Console.WriteLine("User: tuinmaster@hogent.be");
+                Console.WriteLine("Password: P@ssword1234");
 
                 Gebruiker student = new Gebruiker { Email = "student@hogent.be", FirstName = "Student", LastName = "Hogent" };
                 _dbContext.Add(student);
@@ -36,6 +42,10 @@ namespace TuinAppApi.Data
                 student.AddFavoriteTuin(_dbContext.Tuinen.First());
 
                 await CreateGebruiker(student.Email, "P@ssword1234");
+                Console.WriteLine();
+                Console.WriteLine("User: student@hogent.be");
+                Console.WriteLine("Password: P@ssword1234");
+                Console.WriteLine();
                 _dbContext.SaveChanges();
             }
         }

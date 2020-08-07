@@ -17,7 +17,7 @@ namespace TuinAppApi.Controllers
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    [AllowAnonymous]
+   // [AllowAnonymous]
     public class TuinenController : ControllerBase
     {
         private readonly ITuinenRepository _tuinRepository;

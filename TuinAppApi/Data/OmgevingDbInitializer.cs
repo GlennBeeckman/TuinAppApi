@@ -17,11 +17,13 @@ namespace TuinAppApi.Data
 
         public void InitializeData()
         {
-            Console.Write("Omgeving being deleted");
+            Console.WriteLine("Omgeving being deleted");
             _dbContext.Database.EnsureDeleted();
-            Console.Write("omgeving deletes, being created");
+            Console.WriteLine("Creating omgeving");
             if(_dbContext.Database.EnsureCreated())
             {
+                Console.WriteLine("Omgeving created");
+                Console.WriteLine();
                 //seeden geburt in omgevingDbContext
             }
         }

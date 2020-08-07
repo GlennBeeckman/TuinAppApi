@@ -41,6 +41,7 @@ namespace TuinAppApi.Data
                 );
 
             //seeden van de fotos
+            Console.WriteLine("Adding 9 photo's");
             builder.Entity<Foto>().HasData(
                     new { Id = 1, Datum = DateTime.Parse("2020-03-09 16:50:09"), Url = "https://previews.dropbox.com/p/thumb/AA5hFiq-DXHGWzzPjj9G7YjidvrJDDQa-sAwfoiiFQFifqWk0QEgGs71I4fxy0pzJDDjya38inxVyEYEY6Gglbeawr6Ef7duvRljWwQLk-cCv7ry4J5cxWr9Mvs_830psSMAtYFFGQtOwC32RdKSjQp7bQt8_v9lURPXMBRQ8TiC5p83KVFk6AOfbALrGcJ-U4PGCBGsSsRYCBouwHikMqUOEMv0PTFj-ifFukbp--JrJbAH0IxWBx43ky8GwcatoozyVYEvAcbIfFZJJLotmeNHnj2IzVPX7UdsEqembK3G3ELIvXZEfnkJr77c6eCaOgdAPyBSC1BvovVHvDT3iuzvgmnptn4XuKkEewyuxIB81A/p.jpeg?fv_content=true&size_mode=5", OmgevingId = 1 },
                     new { Id = 2, Datum = DateTime.Parse("2020-03-09 17:07:36"), Url = "https://previews.dropbox.com/p/thumb/AA79kZwCjDP-uF_kz7Igg7w7fq3tp514dWjGt9ZpIR7YjOxtRA1yuj0gGu8cpHf0A_OlfdYJnUyp9rpceWhpeWK12MHrc-GYjxEc-PMNf9OCVTG_y0uAyhS_HqrHHV64KtJuZaGLRvTNyTmBp5BzqyEFD1bqPBYfxj0PnZQ27ynYVuTTY7VENQCZjYwbePfd_8GGrY79nMmYTA6AU896EmpuXZ8-GG5ux2-HA8ZyYQsMayMSjGxKJQcbhZGrPHoVOM5qD23q5IT0qa07MTE44njJA7i8YZNoyNNc370BupnDoXd8fiLi-2M0IRUj8eOjqYICX9HKi0fMbUwBfR5-nhTCJz8ius17ZQsLw-P2pwus8g/p.jpeg?fv_content=true&size_mode=5", OmgevingId = 1 },
@@ -53,6 +54,8 @@ namespace TuinAppApi.Data
                     new { Id = 9, Datum = DateTime.Parse("2020-03-10 10:34:52"), Url = "https://previews.dropbox.com/p/thumb/AA6oyBKm1zns4uzJSYNVcbbxdWbYTeIO_VMvcJGM8_incEq7xGffjJ2eTlhWjC39bioZyTnRGFVDld5fC7nDbxfgAqbszYS5V1LSwv9bSMEoL2dXZ47dJiwtZk7cG5eofquj_bxoqAr1vCnsLm6aWFC1SYypvvLElkgfb56UKIJCNogE-cLi5R7mkl76aPiQmVyhqv1DOULGi9H3OzA_HkF9W-X_1MfZo2HX64Tal8uYBL3zK3L6XptNJdvqjpXQrjt6ZxUwZB380igJw685M2ce2CgwGhDChq-_o-rldxjLHsPaBEa2Z4-ZOTGEabFPbSSs1YEvQWlYtxrq8epPH7hZXCRgsBtJ5ZVdffMtDNn4JA/p.jpeg?fv_content=true&size_mode=5", OmgevingId = 1 });
 
             //seeden van de Temperaturen
+            Console.WriteLine("Adding 9 temperatures");
+
             builder.Entity<Temperatuur>().HasData(
                     new { Id = 1, Datum = DateTime.Parse("2020-03-09 16:50:09"), Waarde = 20.812F, OmgevingId = 1 },
                     new { Id = 2, Datum = DateTime.Parse("2020-03-09 17:07:36"), Waarde = 20F, OmgevingId = 1 },
@@ -66,6 +69,7 @@ namespace TuinAppApi.Data
                 );
 
             //seeden van de luchtdrukken
+            Console.WriteLine("Adding 9 air pressures");
             builder.Entity<Luchtdruk>().HasData(
                     new { Id = 1, Datum = DateTime.Parse("2020-03-09 16:50:09"), Waarde = 1005.49F, OmgevingId = 1 },
                     new { Id = 2, Datum = DateTime.Parse("2020-03-09 17:07:36"), Waarde = 1005.49F, OmgevingId = 1 },

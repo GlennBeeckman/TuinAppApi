@@ -14,7 +14,7 @@ namespace TuinAppApi.Controllers
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class OmgevingController: ControllerBase
     {
         private readonly IOmgevingRepository _omgevingRepository;

@@ -67,11 +67,13 @@ namespace TuinAppApi.Data
 
 
             //seeden van tuinen
+            Console.WriteLine("Adding 2 gardens");
             builder.Entity<Tuin>().HasData(
                     new Tuin { Id = 1, Naam = "Vierkante Meter Tuin", dateAdded = DateTime.Now },
                     new Tuin { Id = 2, Naam = "Rode Bloempot", dateAdded = DateTime.Now }
                 );
 
+            Console.WriteLine("Adding 3 plants per garden");
             //seeden van planten
             builder.Entity<Plant>().HasData(
                     new { Id = 1, Naam = "Sla", DagenTotOogst = 50, DatumGeplant = DateTime.Now, TuinId = 1},
