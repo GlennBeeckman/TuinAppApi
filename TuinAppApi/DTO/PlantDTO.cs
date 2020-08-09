@@ -11,6 +11,6 @@ namespace TuinAppApi.DTO
         [Required]
         public string Naam { get; set; }
         public int DagenTotOogst { get; set; }
-        public DateTime DatumGeplant { get; set; }
+        public string DatumGeplant { get; set; }
     }
 }

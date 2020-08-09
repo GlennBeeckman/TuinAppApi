@@ -20,18 +20,19 @@ namespace TuinAppApi.Data
 
         public async Task InitializeData()
         {
-            Console.WriteLine("tuinen being deleted");
+            Console.WriteLine("Removing existing gardens.");
             _dbContext.Database.EnsureDeleted();
-            Console.WriteLine("creating new tuinen");
+            Console.WriteLine("Making final touches to the gardens.");
             if(_dbContext.Database.EnsureCreated())
             {
-                Console.WriteLine("Tuinen created");
-                Console.WriteLine("Adding users");
+                Console.WriteLine("Admiring the finished gardens after a long hot day of digging soil.");
+                Console.WriteLine();
+                Console.WriteLine("Searching for gardeners.");
                 Gebruiker gebruiker = new Gebruiker { Email = "tuinmaster@hogent.be", FirstName = "Glenn", LastName = "Beeckman" };
                 _dbContext.Add(gebruiker);
 
                 await CreateGebruiker(gebruiker.Email, "P@ssword1234");
-                Console.WriteLine("User Created");
+                Console.WriteLine("Found one");
                 Console.WriteLine();
                 Console.WriteLine("User: tuinmaster@hogent.be");
                 Console.WriteLine("Password: P@ssword1234");
@@ -43,6 +44,7 @@ namespace TuinAppApi.Data
 
                 await CreateGebruiker(student.Email, "P@ssword1234");
                 Console.WriteLine();
+                Console.WriteLine("Found another");
                 Console.WriteLine("User: student@hogent.be");
                 Console.WriteLine("Password: P@ssword1234");
                 Console.WriteLine();

@@ -76,7 +76,11 @@ namespace TuinAppApi.Controllers
 
             foreach (var i in tuin.Planten)
             {
-                Plant plant = new Plant(i.Naam, i.DatumGeplant, i.DagenTotOogst);
+                if (i.DatumGeplant.Equals("Invalid Date"));
+                {
+                    i.DatumGeplant = DateTime.Now.ToLongDateString();
+                }
+                Plant plant = new Plant(i.Naam, Convert.ToDateTime(i.DatumGeplant), i.DagenTotOogst);
                 tuinOmToeTeVoegen.AddPlant(plant);
             }
 
@@ -165,7 +169,7 @@ namespace TuinAppApi.Controllers
                 return NotFound();
             }
 
-            var PlantToCreate = new Plant(plant.Naam, plant.DatumGeplant, plant.DagenTotOogst);
+            var PlantToCreate = new Plant(plant.Naam, Convert.ToDateTime(plant.DatumGeplant), plant.DagenTotOogst);
             tuin.AddPlant(PlantToCreate);
             _tuinRepository.SaveChanges();
             return CreatedAtAction("GetPlant", new { id = tuin.Id, plantId = PlantToCreate.Id }, PlantToCreate);

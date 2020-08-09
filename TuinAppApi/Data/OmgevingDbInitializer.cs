@@ -17,12 +17,12 @@ namespace TuinAppApi.Data
 
         public void InitializeData()
         {
-            Console.WriteLine("Omgeving being deleted");
+            Console.WriteLine("Removing existing sensors and data from garden.");
             _dbContext.Database.EnsureDeleted();
-            Console.WriteLine("Creating omgeving");
+            Console.WriteLine("Installing new sensors...");
             if(_dbContext.Database.EnsureCreated())
             {
-                Console.WriteLine("Omgeving created");
+                Console.WriteLine("Sensors installed and ready to use.");
                 Console.WriteLine();
                 //seeden geburt in omgevingDbContext
             }
